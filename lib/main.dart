@@ -1,5 +1,7 @@
+// lib/main.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'snap_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,23 +15,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Snap! Zoo',
       debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [
-                Color(0xFFFFCAF1),
-                Color(0xFFFD98CD),
-              ],
-            ),
-          ),
-          child: const Center(
-            child: SnapZooPage(),
-          ),
-        ),
-      ),
+      home: const SnapZooPage(), // Agora é a página inicial direta
     );
   }
 }
@@ -39,132 +25,7 @@ class SnapZooPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        const Text(
-          'Snap! Zoo',
-          style: TextStyle(
-            fontSize: 32,
-            fontWeight: FontWeight.bold,
-            color: Colors.black87,
-          ),
-        ),
-        const SizedBox(height: 40),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const SnapPage()),
-            );
-          },
-          child: Container(
-            width: 200,
-            height: 60,
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFAE6F3),
-              borderRadius: BorderRadius.circular(2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: const Center(
-              child: Text(
-                'SNAP!',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AlbumsPage()),
-            );
-          },
-          child: Container(
-            width: 200,
-            height: 60,
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFAE6F3),
-              borderRadius: BorderRadius.circular(2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: const Center(
-              child: Text(
-                'ÁLBUNS',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ),
-        GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => const AboutPage()),
-            );
-          },
-          child: Container(
-            width: 200,
-            height: 60,
-            margin: const EdgeInsets.only(bottom: 16),
-            decoration: BoxDecoration(
-              color: const Color(0xFFFAE6F3),
-              borderRadius: BorderRadius.circular(2),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.1),
-                  blurRadius: 8,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: const Center(
-              child: Text(
-                'SAIBA MAIS',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
-}
-
-class SnapPage extends StatelessWidget {
-  const SnapPage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Snap!'),
-        backgroundColor: const Color(0xFFFD98CD),
-      ),
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -176,14 +37,119 @@ class SnapPage extends StatelessWidget {
             ],
           ),
         ),
-        child: const Center(
-          child: Padding(
-            padding: EdgeInsets.all(16.0),
-            child: Text(
-              'Estamos sem câmera por enquanto\nhamburguer cheeseburguer bigmcwoppha',
-              style: TextStyle(fontSize: 24),
-              textAlign: TextAlign.center,
-            ),
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Snap! Zoo',
+                style: TextStyle(
+                  fontSize: 32,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 40),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const SnapPage()),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 60,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFAE6F3),
+                    borderRadius: BorderRadius.circular(2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'SNAP!',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AlbumsPage()),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 60,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFAE6F3),
+                    borderRadius: BorderRadius.circular(2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'ÁLBUNS',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AboutPage()),
+                  );
+                },
+                child: Container(
+                  width: 200,
+                  height: 60,
+                  margin: const EdgeInsets.only(bottom: 16),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFAE6F3),
+                    borderRadius: BorderRadius.circular(2),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withValues(alpha: 0.1),
+                        blurRadius: 8,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: const Center(
+                    child: Text(
+                      'SAIBA MAIS',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -200,6 +166,12 @@ class AlbumsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Álbuns'),
         backgroundColor: const Color(0xFFFD98CD),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
@@ -228,7 +200,7 @@ class AboutPage extends StatelessWidget {
 
   void _showGitHubDialog(BuildContext context) {
     const String githubUrl = 'https://github.com/Seriedade-Inc/Snap-Zoo';
-    
+
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -302,60 +274,58 @@ class AboutPage extends StatelessWidget {
     );
   }
 
-
-Widget _buildTeamMember({
-  required String imageAsset,
-  required String name,
-}) {
-  return Column(
-    children: [
-      Container(
-        width: 100,
-        height: 100,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          border: Border.all(
-            color: Colors.white,
-            width: 3,
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withValues(alpha: 0.1),
-              blurRadius: 8,
-              offset: const Offset(0, 2),
+  Widget _buildTeamMember({
+    required String imageAsset,
+    required String name,
+  }) {
+    return Column(
+      children: [
+        Container(
+          width: 100,
+          height: 100,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            border: Border.all(
+              color: Colors.white,
+              width: 3,
             ),
-          ],
-        ),
-        child: ClipOval(
-          child: Image.asset(
-            imageAsset,
-            fit: BoxFit.cover,
-            errorBuilder: (context, error, stackTrace) {
-              // Se a imagem não carregar, mostra um ícone
-              return Container(
-                color: const Color(0xFFFAE6F3),
-                child: const Icon(
-                  Icons.person,
-                  size: 50,
-                  color: Color(0xFFFD98CD),
-                ),
-              );
-            },
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black.withValues(alpha: 0.1),
+                blurRadius: 8,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: ClipOval(
+            child: Image.asset(
+              imageAsset,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return Container(
+                  color: const Color(0xFFFAE6F3),
+                  child: const Icon(
+                    Icons.person,
+                    size: 50,
+                    color: Color(0xFFFD98CD),
+                  ),
+                );
+              },
+            ),
           ),
         ),
-      ),
-      const SizedBox(height: 8),
-      Text(
-        name,
-        style: const TextStyle(
-          fontSize: 16,
-          fontWeight: FontWeight.w600,
-          color: Colors.black87,
+        const SizedBox(height: 8),
+        Text(
+          name,
+          style: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -364,6 +334,12 @@ Widget _buildTeamMember({
         title: const Text('Saiba Mais'),
         backgroundColor: const Color(0xFFFD98CD),
         elevation: 0,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
       ),
       body: Container(
         decoration: const BoxDecoration(
