@@ -1,12 +1,58 @@
-// lib/snap_page.dart
 import 'package:flutter/material.dart';
 import 'package:model_viewer_plus/model_viewer_plus.dart';
+import 'ARService.dart';
 
-class SnapPage extends StatelessWidget {
+class SnapPage extends StatefulWidget {
   const SnapPage({super.key});
 
   @override
+  State<SnapPage> createState() => _SnapPageState();
+}
+
+class _SnapPageState extends State<SnapPage> {
+  bool _isARSupported = false;
+  bool _loading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkAR();
+  }
+
+  void _checkAR() async {
+    final supported = await ARService.isSupported();
+    setState(() {
+      _isARSupported = supported;
+      _loading = false;
+    });
+  }
+
+  void _showNotSupportedDialog() {
+    showDialog(
+      context: context,
+      builder: (_) => AlertDialog(
+        title: const Text("Realidade Aumentada"),
+        content: const Text(
+          "Seu dispositivo não suporta AR ou não possui o Google Play Services para AR.",
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text("OK"),
+          )
+        ],
+      ),
+    );
+  }
+
+  @override
   Widget build(BuildContext context) {
+    if (_loading) {
+      return const Scaffold(
+        body: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Tamanduá em AR'),
@@ -25,7 +71,7 @@ class SnapPage extends StatelessWidget {
             padding: const EdgeInsets.all(16.0),
             child: Column(
               children: [
-                // Container do modelo 3D com suporte a AR
+                // 👇 MODELO 3D
                 Container(
                   height: 350,
                   decoration: BoxDecoration(
@@ -35,10 +81,10 @@ class SnapPage extends StatelessWidget {
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(18),
-                    child: const ModelViewer(
+                    child: ModelViewer(
                       src: "assets/images/anteater.glb",
                       alt: "Tamanduá 3D",
-                      ar: true,                    // Habilita o botão AR
+                      ar: _isARSupported, // 👈 CONTROLE REAL DO AR
                       autoRotate: true,
                       cameraControls: true,
                       disableZoom: false,
@@ -46,9 +92,37 @@ class SnapPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 20),
 
-                // DESCRIÇÃO DO ANIMAL
+                // 👇 BOTÃO / FEEDBACK DE AR
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  decoration: BoxDecoration(
+                    color: Colors.white70,
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: GestureDetector(
+                    onTap: _isARSupported ? null : _showNotSupportedDialog,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        const Icon(Icons.view_in_ar, size: 18),
+                        const SizedBox(width: 6),
+                        Text(
+                          _isARSupported
+                              ? 'Toque no botão "AR" para ver em realidade aumentada'
+                              : 'AR não suportado neste dispositivo',
+                          style: const TextStyle(fontSize: 13),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                // 👇 DESCRIÇÃO DO ANIMAL (INTACTA)
                 Card(
                   elevation: 4,
                   shape: RoundedRectangleBorder(
@@ -65,7 +139,7 @@ class SnapPage extends StatelessWidget {
                             Icon(Icons.pets, color: Colors.brown),
                             SizedBox(width: 8),
                             Text(
-                              'Tamanduá‑bandeira',
+                              'Tamanduá-bandeira',
                               style: TextStyle(
                                 fontSize: 22,
                                 fontWeight: FontWeight.bold,
@@ -75,9 +149,9 @@ class SnapPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 12),
                         const Text(
-                          'O tamanduá‑bandeira (Myrmecophaga tridactyla) é o maior dos tamanduás, podendo chegar a 2 metros de comprimento. '
+                          'O tamanduá-bandeira (Myrmecophaga tridactyla) é o maior dos tamanduás, podendo chegar a 2 metros de comprimento. '
                               'É conhecido por sua longa língua viscosa (pode atingir 60 cm) e sua pelagem característica, que lembra uma bandeira. '
-                              'Habita savanas e florestas da América Central e do Sul, alimentando‑se principalmente de formigas e cupins.',
+                              'Habita savanas e florestas da América Central e do Sul, alimentando-se principalmente de formigas e cupins.',
                           style: TextStyle(fontSize: 16, height: 1.4),
                         ),
                         const SizedBox(height: 12),
@@ -90,7 +164,7 @@ class SnapPage extends StatelessWidget {
                               style: TextStyle(
                                 fontSize: 14,
                                 fontStyle: FontStyle.italic,
-                                color: Colors.orange[800],
+                                color: Colors.orange,
                               ),
                             ),
                           ],
@@ -99,26 +173,8 @@ class SnapPage extends StatelessWidget {
                     ),
                   ),
                 ),
+
                 const SizedBox(height: 16),
-                // Dica extra sobre AR
-                Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  decoration: BoxDecoration(
-                    color: Colors.white70,
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Row(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Icon(Icons.view_in_ar, size: 18),
-                      SizedBox(width: 6),
-                      Text(
-                        'Toque no botão "AR" para ver em realidade aumentada',
-                        style: TextStyle(fontSize: 13),
-                      ),
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
